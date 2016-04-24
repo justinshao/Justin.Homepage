@@ -7,7 +7,7 @@
   },
 
   "commands": {
-    "web": "Microsoft.AspNet.Server.Kestrel --server.urls http://*:8080"
+    "web": "Microsoft.AspNet.Server.Kestrel --server.urls http://*:80"
   },
 
   "frameworks": {
