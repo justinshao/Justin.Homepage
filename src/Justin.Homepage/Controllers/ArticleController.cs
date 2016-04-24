@@ -1,5 +1,6 @@
 ﻿using Justin.Homepage.Models;
 using Justin.Homepage.Repositories;
+using Justin.Homepage.Util;
 using Microsoft.AspNet.Hosting;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
@@ -160,8 +161,10 @@ namespace Justin.Homepage.Controllers
         
         private bool ValidPwd(string pwd)
         {
+            string articleEditPwd = _config["articleEditPwd"];
+
             return !string.IsNullOrEmpty(pwd) &&
-                pwd.Equals(_config["articleEditPwd"]);
+                Md5Helper.Md5(pwd).Equals(articleEditPwd);
         }
         private bool ValidArticle(Article article)
         {
