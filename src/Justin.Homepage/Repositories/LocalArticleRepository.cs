@@ -16,21 +16,58 @@ namespace Justin.Homepage.Repositories
         private int m_loadNum = 8;
 
         private const string HTML_DIR = "html";
+        private const string IMAGES_DIR = "images";
         private const string DB_FILE = "db.txt";
         
         private static IList<Article> s_allArticles;
-        private static bool s_articleLoaded = false;
+        private static bool s_dbInited = false;
         private static readonly object s_lock = new object();
-
-        private void LoadArticlesWithLock()
+        
+        private void InitDb()
         {
             lock(s_lock)
             {
-                if(!s_articleLoaded)
+                if(!s_dbInited)
                 {
+                    EnsureCreateRootDir();
+                    EnsureCreateHtmlDir();
+                    EnsureCreateImagesDir();
+                    EnsureCreateDbFile();
+
                     s_allArticles = LoadAllArticles();
-                    s_articleLoaded = true;
+                    s_dbInited = true;
                 }
+            }
+        }
+        private void EnsureCreateRootDir()
+        {
+            if(!Directory.Exists(m_articleRootPath))
+            {
+                Directory.CreateDirectory(m_articleRootPath);
+            }
+        }
+        private void EnsureCreateHtmlDir()
+        {
+            string dir = Path.Combine(m_articleRootPath, HTML_DIR);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+        }
+        private void EnsureCreateImagesDir()
+        {
+            string dir = Path.Combine(m_articleRootPath, IMAGES_DIR);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+        }
+        private void EnsureCreateDbFile()
+        {
+            string file = Path.Combine(m_articleRootPath, DB_FILE);
+            if(!File.Exists(file))
+            {
+                using (File.Create(file)) { }
             }
         }
         private IList<Article> LoadAllArticles()
@@ -146,9 +183,9 @@ namespace Justin.Homepage.Repositories
             m_loadNum = int.Parse(config["loadNumOfArticle"]);
             m_articleRootPath = Path.Combine(env.WebRootPath, "articles");
 
-            if(!s_articleLoaded)
+            if(!s_dbInited)
             {
-                LoadArticlesWithLock();
+                InitDb();
             }
         }
         
