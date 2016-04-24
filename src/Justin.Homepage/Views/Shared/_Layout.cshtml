@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    @RenderSection("head", false)
+
+    <style type="text/css">
+        header {
+            text-align: center;
+            padding-top: 20px;
+        }
+
+            header h1 {
+                line-height: 1.2;
+                font-size: 30px;
+                color: #444343;
+            }
+
+        .header-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 40px;
+        }
+    </style>
+
+    @RenderSection("styles", false)
+    @RenderSection("scripts", false)
+
+</head>
+<body style="background: url(/images/bg.png); font-family: Hack">
+    <header>
+        <a href="/"><img border="0" class="header-img" src="/images/header.png"></a>
+        <h1>hello, world</h1>
+    </header>
+    @RenderBody()
+</body>
+</html>

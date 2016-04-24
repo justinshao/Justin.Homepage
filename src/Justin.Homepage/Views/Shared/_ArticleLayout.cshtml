@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    @RenderSection("head", false)
+
+    <link type="text/css" rel="stylesheet" href="http://cdn.ckeditor.com/4.5.8/full-all/contents.css?t=G2VG">
+    <link href="/css/highlight.css" rel="stylesheet" />
+    <link href="/css/article.css" rel="stylesheet" />
+    <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script>
+        $(function(){
+            var header = $('header');
+            var $window = $(window);
+            var $document = $(document);
+            header.css('opacity', Math.max((200 - $window.scrollTop()), 0) / 200);
+
+            $window.scroll(function(e){
+                var dH = $document.height();
+                var wT = $window.scrollTop();
+                var wH = $window.height();
+
+                if(wT <= 1000){
+                    var v = Math.max((200 - wT), 0);
+                    header.css({'opacity': v / 200});
+                }
+            });
+        })
+    </script>
+</head>
+<body>
+    <div style="overflow:hidden; width:0px; height:0; margin:0 auto; position:absolute; top:-800px;">
+        <img src="@Url.Link("default", new { controller = "File", action = "WXShareImg" })">
+    </div>
+    <header>
+        <a href="/"><img border="0" class="header-img" src="../images/header.png"></a>
+    </header>
+    <article class="cke_editable cke_editable_themed cke_contents_ltr cke_show_borders">
+        @RenderBody()
+    </article>
+</body>
+</html>

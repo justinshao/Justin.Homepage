@@ -1,0 +1,15 @@
+﻿@model IEnumerable<Justin.Homepage.Models.Article>
+
+@{ var r = new Random(); }
+@foreach (var a in Model)
+{
+    var def_img = string.Format("/images/def{0}.png", r.Next(100) % 2);
+    <div class="grid">
+        <a href="@Url.RouteUrl("article", new { id = a.Id })" class="imgholder">
+            <img class="lazy" src="@def_img" data-original="@a.ImageUrl" width="175" />
+            <h6 class="title">@a.Title</h6>
+        </a>
+        <p>@a.Abstract</p>
+        <div class="meta">@a.Time.ToString("yyyy-MM-dd")</div>
+    </div>
+}

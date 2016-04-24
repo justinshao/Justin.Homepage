@@ -1,0 +1,9 @@
+﻿@model Justin.Homepage.Models.Article
+
+@{ ViewBag.Title = Model.Title; }
+
+<form action="@Url.RouteUrl("delete-article", new { id = Model.Id })" method="post"
+      style="text-align: center">
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="password" name="pwd" />
+</form>

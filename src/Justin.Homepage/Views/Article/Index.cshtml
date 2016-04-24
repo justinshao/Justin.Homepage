@@ -1,0 +1,30 @@
+﻿@model Justin.Homepage.Models.Article
+
+@{ 
+    Layout = "_ArticleLayout";
+
+    ViewBag.Title = Model.Title;
+}
+
+@section head{
+    <meta name="keywords" content="@Model.KeyWords" />
+    <meta name="description" content="@Model.Abstract" />
+}
+
+@Html.Raw(Model.Html)
+
+@if (!ViewBag.IsMobile)
+{
+    <script>
+        window._bd_share_config =
+            {
+                "common":
+                  { "bdMiniList": ["weixin", "tsina", "fbook", "twi", "linkedin", "qzone"], "bdSnsKey": {}, "bdMini": "1", "bdStyle": "0", "bdSize": "16",
+                      "bdText": "@Html.Raw(Model.Title)",
+                      "bdDesc": "@Html.Raw(Model.Abstract)",
+                      "bdPic": '@Url.Link("default", new { controller = "File", action = "ShareImg" })',
+                  },
+                "slide": { "type": "slide", "bdImg": "5", "bdPos": "right", "bdTop": "130" }
+            }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion=' + ~(-new Date() / 36e5)];
+    </script>
+}

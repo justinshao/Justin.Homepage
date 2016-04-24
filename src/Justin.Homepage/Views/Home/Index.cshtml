@@ -1,0 +1,131 @@
+﻿@{ Layout = null; }
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+        <meta name="keywords" content="邵挺钧,justin,个人主页,技术宅,码农,分享"/>
+        <meta name="description" content="技术宅，但只是宅；文艺，但不够范儿。" />
+        <title>邵</title>
+
+        <link rel='stylesheet' href='/css/style.css' media='screen' />
+        <link rel='stylesheet' href='//cdn.jsdelivr.net/font-hack/2.019/css/hack-extended.min.css' media='screen' />
+
+        <script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
+        <script src="/js/jquery.lazyload.min.js"></script>
+        <script src="/js/blocksit.min.js"></script>
+    </head>
+<body>
+    <div id="wrapper">
+        <header>
+            <a href="/"><img border="0" class="header-img" src="../images/header.png"></a>
+            <h1>hello, world</h1>
+        </header>
+        <section id="container">
+        </section>
+    </div>
+    <div id="loading">
+        <span class="dot"></span>
+        <span class="dot dot2"></span>
+        <span class="dot dot3"></span>
+        <span class="dot dot4"></span>
+    </div>
+
+    <script type="text/javascript">
+    $(function(){
+        var container = $('#container');
+        var currPage = 1;
+        var loading = false;
+        var header = $('header');
+        var numOfCol = getCol();
+        var offsetX = offsetY = 8;
+        var $window = $(window);
+        var $document = $(document);
+        var $loading = $('#loading');
+        
+        header.css('opacity', Math.max((200 - $window.scrollTop()), 0) / 200);
+        
+        loadPage(currPage);
+        
+        $window.scroll(function(e){
+            var dH = $document.height(); 
+            var wT = $window.scrollTop();
+            var wH = $window.height();
+            
+            if (wT < 1000) {
+                var v = Math.max((200 - wT), 0);
+                header.css({ 'opacity': v / 200, 'z-index': v });
+            }
+            
+            if (dH - wT - wH == 0) {
+                loadPage(currPage);
+            }
+        }).resize(function() {
+            container.BlocksIt({ 
+                numOfCol: numOfCol = getCol(), 
+                offsetX: offsetX,
+                offsetY: offsetY 
+            });
+        });
+        
+        function loadPage(pageNum) {
+            if (loading)
+                return;
+
+            loading = true;
+            showLoading();
+            $.get('/article/page/' + pageNum).success(function (pageHtml) {
+                hideLoading();
+                if (pageHtml) {
+                    container.append(pageHtml);
+                    blocksItAndLazyload();
+                    currPage++;
+                }
+
+                loading = false;
+            }).fail(function () {
+                hideLoading();
+                loading = false;
+            });
+        }
+        function blocksItAndLazyload() {
+            $("img.lazy").lazyload({
+                load: function () {
+                    container.BlocksIt({
+                        numOfCol: numOfCol,
+                        offsetX: offsetX,
+                        offsetY: offsetY
+                    });
+                }
+            });
+            container.BlocksIt({ 
+                    numOfCol: numOfCol, 
+                    offsetX: offsetX,
+                    offsetY: offsetY 
+                });
+        }
+        function getCol(){
+            var winWidth = $(window).width();
+            if(winWidth < 440) {
+                return 1;
+            } else if (winWidth < 660) {
+                return 2;
+            } else if (winWidth < 880) {
+                return 3;
+            } else if (winWidth < 1100) {
+                return 4;
+            } else {
+                return 5;
+            }
+        }
+        function showLoading() {
+            $loading.addClass('dots');
+        }
+        function hideLoading() {
+            $loading.removeClass('dots');
+        }
+    });
+    </script>
+</body>
+</html>
