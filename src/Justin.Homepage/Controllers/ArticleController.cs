@@ -130,19 +130,22 @@ namespace Justin.Homepage.Controllers
         public IActionResult CKUploadImage(string id, IFormFile upload, string CKEditorFuncNum)
         {
             string virtualPath = "articles/images/" + id;
-            var dir_info = Request.HttpContext.RequestServices
-                    .GetService<IHostingEnvironment>().WebRootFileProvider
-                    .GetFileInfo(virtualPath);
-            if(!dir_info.Exists)
+            string img_dir = Path.Combine(Request.HttpContext.RequestServices
+                    .GetService<IHostingEnvironment>().WebRootPath, virtualPath);
+            
+            if(!Directory.Exists(img_dir))
             {
-                Directory.CreateDirectory(dir_info.PhysicalPath);
+                Directory.CreateDirectory(img_dir);
             }
+
             string img_id = Guid.NewGuid().ToString();
-            string target = Path.Combine(dir_info.PhysicalPath, img_id);
+            string target = Path.Combine(img_dir, img_id);
 
-            upload.OpenReadStream().CopyTo(new FileStream(target,
-                        FileMode.OpenOrCreate, FileAccess.Write));
-
+            using (Stream file = new FileStream(target,
+                        FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                upload.OpenReadStream().CopyTo(file);
+            }
 
             string imageUrl = Url.Link("article-image", new { articleId = id, id = img_id });
             string result = string.Format(
