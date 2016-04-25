@@ -144,7 +144,7 @@ namespace Justin.Homepage.Controllers
             using (Stream file = new FileStream(target,
                         FileMode.OpenOrCreate, FileAccess.Write))
             {
-                upload.OpenReadStream().CopyTo(file);
+                upload.OpenReadStream().CopyTo(file); 
             }
 
             string imageUrl = Url.Link("article-image", new { articleId = id, id = img_id });
