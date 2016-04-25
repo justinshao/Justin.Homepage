@@ -141,7 +141,7 @@ namespace Justin.Homepage.Controllers
             string img_id = Guid.NewGuid().ToString();
             string target = Path.Combine(img_dir, img_id);
 
-            using (Stream file = System.IO.File.Create(target, 0))
+            using (Stream file = System.IO.File.Create(target))
             {
                 upload.OpenReadStream().CopyTo(file, 0x1000); 
             }
