@@ -14,7 +14,7 @@
 </style>
 <form action="@Url.RouteUrl("new-article")"
       method="post" onSubmit="return submit(this);" class="form-horizontal">
-    <input type="hidden" name="Id" value="@Model.Id" />
+    @Html.HiddenFor(m => m.Id)
     <div class="form-group">
         <div class="col-sm-3 col-sm-offset-2">
             <input name="Title" value="@Model.Title" class="form-control" type="text" placeholder="标题">
