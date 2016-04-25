@@ -141,10 +141,10 @@ namespace Justin.Homepage.Controllers
             string img_id = Guid.NewGuid().ToString();
             string target = Path.Combine(img_dir, img_id);
 
-            using (Stream file = new FileStream(target,
-                        FileMode.OpenOrCreate, FileAccess.Write))
+            using (Stream file = new FileStream(target, 
+                FileMode.OpenOrCreate, FileAccess.Write))
             {
-                upload.OpenReadStream().CopyTo(file); 
+                upload.OpenReadStream().CopyTo(file, 0x1000); 
             }
 
             string imageUrl = Url.Link("article-image", new { articleId = id, id = img_id });
