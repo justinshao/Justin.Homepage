@@ -11,10 +11,5 @@ namespace Justin.Homepage.Controllers
         {
             return File("images/share_img.png", "image/png");
         }
-        [HttpGet]
-        public IActionResult WXShareImg()
-        {
-            return File("images/wxshare_img.png", "image/png");
-        }
     }
 }
