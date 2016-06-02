@@ -15,7 +15,7 @@
     <script>hljs.initHighlightingOnLoad();</script>
     <script>
         $(function(){
-            var header = $('header');
+            var header = $('header a');
             var $window = $(window);
             var $document = $(document);
             header.css('opacity', Math.max((200 - $window.scrollTop()), 0) / 200);
@@ -27,7 +27,7 @@
 
                 if(wT <= 1000){
                     var v = Math.max((200 - wT), 0);
-                    header.css({'opacity': v / 200});
+                    header.css({ 'opacity': v / 200 });
                 }
             });
         })
@@ -37,7 +37,7 @@
     <div style="overflow:hidden; width:0px; height:0; margin:0 auto; position:absolute; top:-800px;">
         <img src="/images/wxshare_img.png" />
     </div>
-    <header>
+    <header style="opacity: 1">
         <a href="/"><img border="0" class="header-img" src="../images/header.png"></a>
     </header>
     <article class="cke_editable cke_editable_themed cke_contents_ltr cke_show_borders">
