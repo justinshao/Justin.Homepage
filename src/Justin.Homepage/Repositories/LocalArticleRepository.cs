@@ -259,7 +259,8 @@ namespace Justin.Homepage.Repositories
         }
         public IEnumerable<Article> GetPage(int pageNum)
         {
-            return s_allArticles.Skip((pageNum - 1) * m_loadNum).Take(m_loadNum);
+            return s_allArticles.OrderByDescending(a => a.Time)
+                .Skip((pageNum - 1) * m_loadNum).Take(m_loadNum);
         }
 
         public class DbOp
