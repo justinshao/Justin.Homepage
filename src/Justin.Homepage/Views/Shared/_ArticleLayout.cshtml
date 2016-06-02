@@ -18,7 +18,7 @@
             var header = $('header a');
             var $window = $(window);
             var $document = $(document);
-            header.css('opacity', Math.max((200 - $window.scrollTop()), 0) / 200);
+            header.css('opacity', Math.max((120 - $window.scrollTop()), 0) / 120);
 
             $window.scroll(function(e){
                 var dH = $document.height();
@@ -26,8 +26,8 @@
                 var wH = $window.height();
 
                 if(wT <= 1000){
-                    var v = Math.max((200 - wT), 0);
-                    header.css({ 'opacity': v / 200 });
+                    var v = Math.max((120 - wT), 0);
+                    header.css({ 'opacity': v / 120 });
                 }
             });
         })
